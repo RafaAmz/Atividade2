@@ -65,6 +65,7 @@ return [
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -108,13 +109,13 @@ return [
     ],
     'api-tools-hal' => [
         'metadata_map' => [
-            \Status\V1\Rest\Status\StatusEntity::class => [
+            'Status\\V1\\Rest\\Status\\StatusEntity' => [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'status.rest.status',
                 'route_identifier_name' => 'status_id',
                 'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
             ],
-            \Status\V1\Rest\Status\StatusCollection::class => [
+            'Status\\V1\\Rest\\Status\\StatusCollection' => [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'status.rest.status',
                 'route_identifier_name' => 'status_id',
@@ -214,21 +215,25 @@ return [
         'Status\\V1\\Rest\\Category\\Validator' => [
             0 => [
                 'name' => 'name',
-                'required' => false,
+                'required' => true,
                 'filters' => [],
                 'validators' => [],
+                'error_message' => 'Name is required',
+                'description' => 'Category name',
             ],
         ],
         'Status\\V1\\Rest\\Product\\Validator' => [
             0 => [
                 'name' => 'name',
-                'required' => false,
+                'required' => true,
                 'filters' => [],
                 'validators' => [],
+                'error_message' => 'Name is required',
+                'description' => 'Product name',
             ],
             1 => [
                 'name' => 'category_id',
-                'required' => false,
+                'required' => true,
                 'filters' => [
                     0 => [
                         'name' => \Laminas\Filter\StripTags::class,
@@ -238,6 +243,8 @@ return [
                     ],
                 ],
                 'validators' => [],
+                'error_message' => 'Category is required',
+                'description' => 'Category ID',
             ],
         ],
     ],
@@ -260,6 +267,7 @@ return [
                 'hydrator_name' => \Laminas\Hydrator\ArraySerializableHydrator::class,
                 'controller_service_name' => 'Status\\V1\\Rest\\Product\\Controller',
                 'entity_identifier_name' => 'id',
+                'table_service' => 'Status\\V1\\Rest\\Product\\ProductResource\\Table',
             ],
         ],
     ],
